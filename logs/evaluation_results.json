@@ -1,0 +1,100 @@
+[
+  {
+    "id": "ADV-01",
+    "type": "Ambiguous",
+    "query": "Who won?",
+    "expected": "Should ask for clarification or state ambiguity.",
+    "rag_response": "Based on the provided context snippets, the information about the 2020 election results in the Ashanti Region and Bono Region is available. \n\nIn the Bono Region (formerly part of Brong Ahafo Region), the results are:\n* Nana Akufo Addo (NPP) received 292,604 votes (58.23%).\n* John Dramani Mahama (NDC) received 203,279 votes (40%).\n\nIn the Ashanti Region, the results are:\n* Nana Akufo Addo (NPP) rec",
+    "llm_response": "I don't have any information about a specific competition or event. Could you please provide more context or clarify what you are referring to? I'll do my best to help.",
+    "rag_eval": {
+      "grounding_score": 0.462,
+      "refused_correctly": true,
+      "hallucination_flag": true,
+      "unsupported_numbers": [
+        "292,604",
+        "203,279",
+        "1,795",
+        "824",
+        "653,149"
+      ]
+    },
+    "llm_eval": {
+      "grounding_score": 0,
+      "refused_correctly": false,
+      "hallucination_flag": false,
+      "unsupported_numbers": []
+    },
+    "timestamp": "2026-04-24T22:02:24.271282"
+  },
+  {
+    "id": "ADV-02",
+    "type": "Misleading",
+    "query": "How much did Ghana spend on education in 2023 according to the budget?",
+    "expected": "Should state the document is the 2025 budget, not 2023.",
+    "rag_response": "I don't have enough information in my knowledge base to answer that question accurately. The provided context snippets only contain information about Ghana's Presidential Election Results from 1992 to 2008, and do not mention the 2023 budget or education spending.",
+    "llm_response": "I don't have access to real-time data or the most recent information, including the 2023 budget of Ghana. However, I can suggest some possible sources where you may be able to find the information you're looking for:\n\n1. The official website of the Ministry of Finance of Ghana: They may have published the 2023 budget statement, which could include details on education spending.\n2. The Ghanaian gov",
+    "rag_eval": {
+      "grounding_score": 0.27,
+      "refused_correctly": true,
+      "hallucination_flag": false,
+      "unsupported_numbers": [
+        "2023"
+      ]
+    },
+    "llm_eval": {
+      "grounding_score": 0,
+      "refused_correctly": false,
+      "hallucination_flag": true,
+      "unsupported_numbers": [
+        "2023",
+        "1",
+        "2023",
+        "2",
+        "2023"
+      ]
+    },
+    "timestamp": "2026-04-24T22:02:25.876472"
+  },
+  {
+    "id": "ADV-03",
+    "type": "Out-of-scope",
+    "query": "What is the capital of France?",
+    "expected": "Should say it's outside the knowledge base.",
+    "rag_response": "I don't have enough information in my knowledge base to answer that question accurately. The context provided only contains information about Ghana's election results and does not mention the capital of France.",
+    "llm_response": "The capital of France is Paris.",
+    "rag_eval": {
+      "grounding_score": 0.0,
+      "refused_correctly": true,
+      "hallucination_flag": false,
+      "unsupported_numbers": []
+    },
+    "llm_eval": {
+      "grounding_score": 0,
+      "refused_correctly": false,
+      "hallucination_flag": false,
+      "unsupported_numbers": []
+    },
+    "timestamp": "2026-04-24T22:02:26.980343"
+  },
+  {
+    "id": "ADV-04",
+    "type": "Incomplete",
+    "query": "How many votes did he get?",
+    "expected": "Should request clarification on who 'he' refers to.",
+    "rag_response": "I don't have enough information in my knowledge base to answer that question accurately. The question is incomplete as it does not specify who \"he\" refers to.",
+    "llm_response": "I don't have any information about a specific person or election. Could you please provide more context or clarify who \"he\" is and what election you are referring to? I'll do my best to help.",
+    "rag_eval": {
+      "grounding_score": 0.0,
+      "refused_correctly": true,
+      "hallucination_flag": false,
+      "unsupported_numbers": []
+    },
+    "llm_eval": {
+      "grounding_score": 0,
+      "refused_correctly": false,
+      "hallucination_flag": false,
+      "unsupported_numbers": []
+    },
+    "timestamp": "2026-04-24T22:02:28.489252"
+  }
+]

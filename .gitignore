@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# Data (large files — download on first run)
+data/raw/
+data/processed/faiss.index
+
+# Logs (auto-generated)
+logs/*.log
+logs/*.jsonl
+
+# Keep these
+!logs/.gitkeep
+!data/processed/chunks.json
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
+Thumbs.db
