@@ -154,7 +154,7 @@ ai_[index]/
 
 ##  Deployed Application
 
-> **Live URL:** [Add your deployment URL here]
+> **Live URL:** [(https://juliuschatbot.vercel.app/)]
 
 ---
 
