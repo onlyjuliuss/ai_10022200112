@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+
 const exampleQuestions = [
   {
     label: '🗳️ Election Results',
@@ -47,15 +49,30 @@ function App() {
     setError('')
 
     try {
-      const response = await fetch('/api/query', {
+      const url = `${API_BASE}/api/query`
+      const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: text.trim() })
       })
 
       if (!response.ok) {
-        const body = await response.json()
-        throw new Error(body.detail || 'Server error')
+        let message = 'Server error'
+        try {
+          const body = await response.json()
+          const d = body.detail
+          message =
+            typeof d === 'string'
+              ? d
+              : Array.isArray(d) && d[0]?.msg
+                ? d[0].msg
+                : d
+                  ? String(d)
+                  : message
+        } catch {
+          message = response.statusText || message
+        }
+        throw new Error(message)
       }
 
       const data = await response.json()

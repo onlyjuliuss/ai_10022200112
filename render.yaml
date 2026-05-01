@@ -9,3 +9,7 @@ services:
     envVars:
       - key: GROQ_API_KEY
         sync: false
+      # Set at build time if the SPA is hosted on a different origin than the API.
+      # Example: https://your-api.onrender.com — omit or leave unset for same-origin (static served by FastAPI).
+      - key: VITE_API_BASE_URL
+        sync: false
