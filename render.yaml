@@ -1,3 +1,5 @@
+# Free tier ~512MB RAM: prebuilt data/processed/faiss.index is committed so the app skips PDF ingestion at boot.
+# If you still OOM, upgrade the instance or strip optional dependencies.
 services:
   - type: web
     name: acity-rag

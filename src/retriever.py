@@ -18,6 +18,13 @@ INDEX_PATH  = Path("data/processed/faiss.index")
 CHUNKS_PATH = Path("data/processed/chunks.json")
 
 
+def load_chunks_json(chunks_path: Path) -> list:
+    """Load chunks; tolerate legacy non-UTF8 bytes (e.g. lone 0xA0) in older exports."""
+    raw = chunks_path.read_bytes()
+    text = raw.decode("utf-8", errors="replace").replace("\ufffd", " ")
+    return json.loads(text)
+
+
 class VectorStore:
     """
     Manual FAISS-based vector store.
@@ -61,7 +68,7 @@ class VectorStore:
     def save(self, index_path: Path = INDEX_PATH, chunks_path: Path = CHUNKS_PATH):
         index_path.parent.mkdir(parents=True, exist_ok=True)
         faiss.write_index(self.index, str(index_path))
-        with open(chunks_path, "w") as f:
+        with open(chunks_path, "w", encoding="utf-8") as f:
             json.dump(self.chunks, f, ensure_ascii=False, indent=2)
         logger.info(f"Saved FAISS index → {index_path}")
 
@@ -69,8 +76,7 @@ class VectorStore:
     def load(cls, index_path: Path = INDEX_PATH, chunks_path: Path = CHUNKS_PATH) -> "VectorStore":
         store = cls()
         store.index = faiss.read_index(str(index_path))
-        with open(chunks_path) as f:
-            store.chunks = json.load(f)
+        store.chunks = load_chunks_json(chunks_path)
         logger.info(f"Loaded FAISS index: {store.index.ntotal} vectors, {len(store.chunks)} chunks")
         return store
 

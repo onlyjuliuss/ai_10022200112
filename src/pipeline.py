@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.embedder import Embedder
-from src.retriever import VectorStore, BM25Index, HybridRetriever, build_index
+from src.retriever import VectorStore, BM25Index, HybridRetriever, build_index, load_chunks_json
 from src.prompt import build_prompt
 from src.ingest import run_ingestion
 
@@ -54,13 +54,16 @@ class RAGPipeline:
         index_path  = Path("data/processed/faiss.index")
         chunks_path = Path("data/processed/chunks.json")
 
-        if rebuild or not index_path.exists() or not chunks_path.exists():
+        if rebuild or not chunks_path.exists():
             chunks = run_ingestion()
+            self.vector_store, self.bm25_index = build_index(chunks, self.embedder)
+        elif not index_path.exists():
+            logger.info("chunks.json present but FAISS index missing — building embeddings only (skipping PDF ingestion).")
+            chunks = load_chunks_json(chunks_path)
             self.vector_store, self.bm25_index = build_index(chunks, self.embedder)
         else:
             self.vector_store = VectorStore.load(index_path, chunks_path)
-            with open(chunks_path) as f:
-                chunks = json.load(f)
+            chunks = self.vector_store.chunks
             self.bm25_index = BM25Index()
             self.bm25_index.build(chunks)
 
